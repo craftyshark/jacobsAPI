@@ -1,0 +1,89 @@
+{
+    "metadata": {
+        "version": "2.0"
+    },
+    "contentContainerWidth": "narrow",
+    "content": [
+        {
+            "elementType": "divider",
+            "borderColor": "transparent"
+        },
+        {
+            "elementType": "form",
+            "postType": "foreground",
+            "relativePath": "/date/?time=0&day=mon",
+            "id": "dates",
+            "items": [
+                {
+                    "elementType": "formInputTime",
+                    "name": "time",
+                    "label": "Time",
+                    "required": true
+                },
+                {
+                    "elementType": "formInputRadio",
+                    "name": "day",
+                    "label": "Day of week",
+                    "required": true,
+                    "options":
+                        {
+                            "mon": "Mon",
+                            "tue": "Tue",
+                            "wed": "Wed",
+                            "thr": "Thr",
+                            "fri": "Fri"
+                        }
+                }
+            ]
+        },
+        {
+            "elementType": "divider",
+            "borderColor": "transparent"
+        },
+        {
+            "elementType": "divider",
+            "borderColor": "transparent"
+        },
+        {
+            "elementType": "buttonGroup",
+            "fullWidth": true,
+            "buttons": [
+                {
+                    "elementType": "linkButton",
+                    "title": "Get Forecast",
+                    "size": "normal",
+                    "events": [
+                        {
+                            "eventName": "click",
+                            "action": "submitForm",
+                            "targetId": "dates",
+                            "region": "content"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "elementType": "divider",
+            "borderColor": "transparent"
+        },
+        {
+            "elementType": "container",
+            "id": "map_container",
+            "content": [
+                {
+                    "elementType": "googleMap",
+                    "aspectRatio": "16:9",
+                    "initialZoomLevel": 15,
+                    "initialLatitude": 36.8137,
+                    "initialLongitude": -119.7462,
+                    "minZoomLevel": 10,
+                    "maxZoomLevel": 21,
+                    "baseLayers": [
+                        "roadmap"
+                    ]
+                }
+            ]
+        }
+    ]
+}

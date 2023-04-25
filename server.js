@@ -50,7 +50,8 @@ app.get('/api/:time/:day', function (req, res) {
 			return
 		}
 		var page = JSON.parse(data)
-		var svg = recolorSVG(req.params.time.replace(':', ''), req.params.day)
+		var time = parseTime(req.params.time.replace(':', ''))
+		var svg = recolorSVG(time, parseDay(req.params.day))
 		page.content[6].content[0].groundOverlayImages = [
 			{
 				url: "data:image/svg+xml;base64,"+(new Buffer.from(svg).toString('base64')),
@@ -63,16 +64,11 @@ app.get('/api/:time/:day', function (req, res) {
 			}
 		]
 		try {
-			
 			res.set({ 'content-type': 'application/json; charset=utf-8' });
 			res.json(page)
-		
-
-			
 		}
 		catch (err) {
 			console.log('Error parsing', err)
-
 		}
 	});
 })
@@ -86,7 +82,7 @@ app.post('/api/date', function (req, res) {
 			"metadata": {
 				"version": "2.0",
 				"redirectLink": {
-					"relativePath": '/' + req.body.time + "/" + req.body.day
+					"relativePath": '/api/' + req.body.time + "/" + req.body.day
 				}
 			}
 		}
@@ -117,5 +113,35 @@ function recolorSVG(time, day) {
 			file = file.replaceAll(target, hue)
 		}
 		return file
+	}
+}
+
+function parseTime(time) {
+	var result = "0000";
+	var front = parseInt(time.slice(0,2))
+	var back = parseInt(time.slice(2,4))
+
+	if(back < 30) {
+		if(front < 10) {
+			result = "0" + front.toString() + "00"
+		} else {
+			result = front.toString() + "00"
+		}
+	} else {
+		if(front+1 < 10) {
+			result = "0" + (front+1).toString() + "00"
+		} else if(front+1 <= 24) {
+			result = (front+1).toString() + "00"
+		}
+	}
+	
+	return result
+}
+
+function parseDay(day) {
+	if(!(day in forecastJson)) {
+		return "mon"
+	} else {
+		return day
 	}
 }

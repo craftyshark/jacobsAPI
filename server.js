@@ -82,7 +82,7 @@ app.post('/api/date', function (req, res) {
 			"metadata": {
 				"version": "2.0",
 				"redirectLink": {
-					"relativePath": '/api/' + req.body.time + "/" + req.body.day
+					"relativePath": '/' + req.body.time + "/" + req.body.day
 				}
 			}
 		}
